@@ -1,0 +1,132 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Scanner;
+import java.util.StringTokenizer;
+
+public class Runner {
+
+	static Scanner sc = new Scanner(System.in);
+    
+	public static void main(String[] args) throws NumberFormatException, IOException {
+	
+		PQ pq = new PQ();
+		int choice = sc.nextInt();
+        
+        while(choice != -1) {
+			switch(choice) {
+				case 1 : // insert
+					
+    				int element = sc.nextInt();
+                    pq.insert(element);
+					break;
+				case 2 : // getMin
+				try {
+					System.out.println(pq.getMin());
+				} catch (PriorityQueueException e) {
+					System.out.println(Integer.MIN_VALUE);
+					return;
+				}
+					break;
+				case 3 : // removeMin
+				try {
+					System.out.println(pq.removeMin());
+				} catch (PriorityQueueException e) {
+					System.out.println(Integer.MIN_VALUE);
+					return;
+				}
+					break;
+				case 4 : // size
+					System.out.println(pq.size());
+					break;
+				case 5 : // isEmpty
+					System.out.println(pq.isEmpty());
+				default :
+						return;
+			}
+			choice = sc.nextInt();
+		}
+	}
+
+
+public class PQ {
+
+	private ArrayList<Integer> heap;
+
+	public PQ() {
+		heap = new ArrayList<Integer>();
+	}
+
+	boolean isEmpty() {
+		return heap.size() == 0;
+	}
+
+	int size() {
+		return heap.size();
+	}
+
+	int getMin() throws PriorityQueueException {
+		if (isEmpty()) {
+			// Throw an exception
+			throw new PriorityQueueException();
+		}
+		return heap.get(0);
+	}
+
+	void insert(int element) {
+		heap.add(element);
+		int childIndex = heap.size() - 1;
+		int parentIndex = (childIndex - 1) / 2;
+
+		while (childIndex > 0) {
+			if (heap.get(childIndex) < heap.get(parentIndex)) {
+				int temp = heap.get(childIndex);
+				heap.set(childIndex, heap.get(parentIndex));
+				heap.set(parentIndex, temp);
+				childIndex = parentIndex;
+				parentIndex = (childIndex - 1) / 2;
+			} else {
+				return;
+			}
+		}
+	}
+
+	int removeMin() throws PriorityQueueException
+	 {
+		if (isEmpty())
+		 {
+			// Throw an exception
+			throw new PriorityQueueException();
+		}
+		int remove=heap.get(0);
+		heap.set(0,heap.get(heap.size()-1));
+		heap.remove(heap.size()-1);
+		    int parentIndex=0;
+			int child1=(2*parentIndex)+1;
+			int child2=(2*parentIndex)+2;
+			while(child1<heap.size()-1)
+			{
+				int minIndex=parentIndex;
+				if(heap.get(child1)<heap.get(minIndex))
+				{
+				minIndex=child1;
+				}
+					if(child2<heap.size()&&heap.get(child2)<heap.get(minIndex))
+				{
+					minIndex=child2;
+				}
+              int temp=heap.get(minIndex);
+			  heap.set(minIndex,heap.get(parentIndex));
+			  heap.set(parentIndex,temp);
+			  parentIndex=minIndex;
+			  child1=(2*parentIndex)+1;
+			  child2=(2*parentIndex)+2;
+			} 
+			return remove;
+		
+	}
+}
+
+class PriorityQueueException extends Exception {
+
+}
