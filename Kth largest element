@@ -1,0 +1,47 @@
+import java.io.IOException;
+import java.util.Scanner;
+
+//import java.io.BufferedReader;
+//import java.io.InputStreamReader;
+//import java.util.StringTokenizer;
+
+public class Runner {
+
+    static Scanner s = new Scanner(System.in);
+
+	public static void main(String[] args) throws NumberFormatException, IOException {
+        
+        int n = s.nextInt();
+		int input[] = new int[n];
+		for(int j = 0; j < n; j++) {
+			input[j] = s.nextInt();
+		}
+        int k = s.nextInt();
+        
+		System.out.println(kthLargest(n, input, k));
+	}
+public static int kthLargest(int n, int[] input, int k) {
+		if(k>input.length)
+		{
+			return 0 ;
+		}
+		else
+		{
+		PriorityQueue<Integer>pq=new PriorityQueue<>();
+		for(int i=0;i<k;i++)
+		{
+			pq.add(input[i]);
+		}
+		for(int i=k;i<input.length;i++)
+		{
+			if(pq.peek()<input[i])
+			{
+				pq.poll();
+				pq.add(input[i]);
+			}
+		}
+		return pq.peek();
+		}
+
+	}
+}
