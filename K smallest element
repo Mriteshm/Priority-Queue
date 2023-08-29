@@ -1,0 +1,42 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.StringTokenizer;
+import java.util.Scanner;
+
+public class Runner {
+
+    static Scanner sc = new Scanner(System.in);
+
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		
+        int n = sc.nextInt();
+        int input[] = new int[n];
+
+        for(int i = 0; i < n ; i++){
+            input[i] = sc.nextInt();
+        }
+
+        int k = sc.nextInt();
+
+        ArrayList<Integer> output = kSmallest(n, input, k);
+		Collections.sort(output);
+		for (int i : output) {
+			System.out.print(i + " ");
+		}
+	}
+public class Solution {
+
+	public static ArrayList<Integer> kSmallest(int n, int[] input, int k) {
+		
+      Arrays.sort(input);
+	  ArrayList<Integer>ans=new ArrayList<Integer>();
+	  for(int i=0;i<k;i++)
+	  {
+		  ans.add(input[i]);
+	  }
+	  return ans;
+	}
+}
